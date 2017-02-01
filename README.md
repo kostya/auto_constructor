@@ -33,3 +33,11 @@ p A.new(a: 1, c: 3, e: 1.0)                      # => A(@a=1, @b="def", @c=3, @d
 p A.new({:a => 1, :c => 3, :e => 1.0})           # => A(@a=1, @b="def", @c=3, @d=nil, @e=1.0)
 p A.new({"a" => 1, "c" => 3, "e" => 1.0})        # => A(@a=1, @b="def", @c=3, @d=nil, @e=1.0)
 ```
+
+## Fields options
+
+```
+  :default set default value
+  :getter (enabled by default, false to disable)
+  :setter (enabled by default, false to disable)
+```
