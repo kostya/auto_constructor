@@ -1,3 +1,12 @@
+struct NamedTuple
+  def blo?(key : Symbol | String)
+    {% for key in T %}
+      return true if {{key.symbolize}} == key
+    {% end %}
+    false
+  end
+end
+
 module AutoConstructor
   VERSION = "0.1"
 
@@ -43,7 +52,11 @@ module AutoConstructor
 
       def initialize(**args)
         \{% for field in AUTO_CONSTRUCTOR_FIELDS %}
-          @\{{field[:name].id}} = args[:\{{field[:name].id}}]? \{{ field[:default] ? "|| #{field[:default]}".id : "".id }}
+          \{% if field[:default] %}
+            @\{{field[:name].id}} = args[:\{{field[:name].id}}]? || \{{field[:default]}}
+          \{% else %}
+            @\{{field[:name].id}} = args[:\{{field[:name].id}}]?
+          \{% end%}
         \{% end %}
         \{% for ai in AFTER_INITIALIZE %} \{{ ai.id }} \{% end %}
       end
@@ -57,6 +70,7 @@ module AutoConstructor
         \{% for ai in AFTER_INITIALIZE %} \{{ ai.id }} \{% end %}
       end
 
+      # raises runtime error, on incorrect type
       def initialize(h : Hash(String, T)) forall T
         \{% for field in AUTO_CONSTRUCTOR_FIELDS %}
           @\{{field[:name].id}} = (h[\{{field[:name].id.stringify}}]?\{{ field[:default] ? "|| #{field[:default]}".id : "".id }}).as(\{{field[:type].id}})
@@ -64,6 +78,7 @@ module AutoConstructor
         \{% for ai in AFTER_INITIALIZE %} \{{ ai.id }} \{% end %}
       end
 
+      # raises runtime error, on incorrect type
       def initialize(h : Hash(Symbol, T)) forall T
         \{% for field in AUTO_CONSTRUCTOR_FIELDS %}
           @\{{field[:name].id}} = (h[:\{{field[:name].id}}]?\{{ field[:default] ? "|| #{field[:default]}".id : "".id }}).as(\{{field[:type].id}})

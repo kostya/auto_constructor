@@ -38,5 +38,13 @@ describe AutoConstructor do
       s2.b.should eq "b"
       s2.c.should eq s1
     end
+
+    it "extra fields, just skipped" do
+      s1 = MoreFieldsSimple.new(1)
+      s2 = MoreFields.new(c: s1, b: "b", a: 10, z: 8)
+      s2.a.should eq 10
+      s2.b.should eq "b"
+      s2.c.should eq s1
+    end
   end
 end

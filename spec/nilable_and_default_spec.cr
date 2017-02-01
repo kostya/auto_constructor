@@ -1,56 +1,130 @@
 require "./spec_helper"
 
-class NilableAndDefault
+class Nilable1
   include AutoConstructor
   field :x, Int32?, default: 1
 end
 
-class NilableAndDefaultBool
+class Nilable2
+  include AutoConstructor
+  field :x, Int32?, default: nil
+end
+
+class Nilable3
   include AutoConstructor
   field :x, Bool?, default: false
-  field :y, Bool?, default: true
+end
 
-  def xy
-    {x, y}
-  end
+class Nilable4
+  include AutoConstructor
+  field :x, Bool?, default: true
+end
+
+class Nilable5
+  include AutoConstructor
+  field :x, Bool?, default: nil
 end
 
 describe AutoConstructor do
-  context "NilableAndDefault" do
-    it { NilableAndDefault.new(2).x.should eq 2 }
-    it { NilableAndDefault.new.x.should eq 1 }
-    it { NilableAndDefault.new(nil).x.should eq nil }
+  context "Nilable1" do
+    it { Nilable1.new(2).x.should eq 2 }
+    it { Nilable1.new.x.should eq 1 }
+    it { Nilable1.new(nil).x.should eq nil }
 
-    it { NilableAndDefault.new(x: 2).x.should eq 2 }
-    it { NilableAndDefault.new(x: nil).x.should eq nil }
+    it { Nilable1.new(x: 2).x.should eq 2 }
+    it { Nilable1.new(x: nil).x.should eq nil }
+    it { Nilable1.new(y: nil).x.should eq 1 }
 
-    it { NilableAndDefault.new({:x => 2}).x.should eq 2 }
-    it { NilableAndDefault.new({:x => nil}).x.should eq nil }
+    it { Nilable1.new({:x => 2}).x.should eq 2 }
+    it { Nilable1.new({:x => nil}).x.should eq nil }
+    it { Nilable1.new({:y => nil}).x.should eq 1 }
 
-    it { NilableAndDefault.new({"x" => 2}).x.should eq 2 }
-    it { NilableAndDefault.new({"x" => nil}).x.should eq nil }
+    it { Nilable1.new({"x" => 2}).x.should eq 2 }
+    it { Nilable1.new({"x" => nil}).x.should eq nil }
+    it { Nilable1.new({"y" => nil}).x.should eq 1 }
   end
 
-  context "NilableAndDefaultBool" do
-    it { NilableAndDefaultBool.new(true, true).xy.should eq({true, true}) }
-    it { NilableAndDefaultBool.new(true, false).xy.should eq({true, false}) }
-    it { NilableAndDefaultBool.new(false, true).xy.should eq({false, true}) }
-    it { NilableAndDefaultBool.new(false, false).xy.should eq({false, false}) }
+  context "Nilable2" do
+    it { Nilable2.new(2).x.should eq 2 }
+    it { Nilable2.new.x.should eq nil }
+    it { Nilable2.new(nil).x.should eq nil }
 
-    it { NilableAndDefaultBool.new(x: true, y: true).xy.should eq({true, true}) }
-    it { NilableAndDefaultBool.new(x: true, y: false).xy.should eq({true, false}) }
-    it { NilableAndDefaultBool.new(x: false, y: true).xy.should eq({false, true}) }
-    it { NilableAndDefaultBool.new(x: false, y: false).xy.should eq({false, false}) }
+    it { Nilable2.new(x: 2).x.should eq 2 }
+    it { Nilable2.new(x: nil).x.should eq nil }
+    it { Nilable2.new(y: nil).x.should eq nil }
 
-    it { NilableAndDefaultBool.new(x: true).xy.should eq({true, true}) }
-    it { NilableAndDefaultBool.new(x: false).xy.should eq({false, true}) }
+    it { Nilable2.new({:x => 2}).x.should eq 2 }
+    it { Nilable2.new({:x => nil}).x.should eq nil }
+    it { Nilable2.new({:y => nil}).x.should eq nil }
 
-    it { NilableAndDefaultBool.new(y: true).xy.should eq({false, true}) }
-    it { NilableAndDefaultBool.new(y: false).xy.should eq({false, false}) }
+    it { Nilable2.new({"x" => 2}).x.should eq 2 }
+    it { Nilable2.new({"x" => nil}).x.should eq nil }
+    it { Nilable2.new({"y" => 1}).x.should eq nil }
+  end
 
-    it { NilableAndDefaultBool.new(x: nil).xy.should eq({nil, true}) }
-    it { NilableAndDefaultBool.new(y: nil).xy.should eq({false, nil}) }
-    it { NilableAndDefaultBool.new(x: nil, y: nil).xy.should eq({nil, nil}) }
-    it { NilableAndDefaultBool.new(nil, nil).xy.should eq({nil, nil}) }
+  context "Nilable3" do
+    it { Nilable3.new(true).x.should eq true }
+    it { Nilable3.new(false).x.should eq false }
+    it { Nilable3.new.x.should eq false }
+    it { Nilable3.new(nil).x.should eq nil }
+
+    it { Nilable3.new(x: true).x.should eq true }
+    it { Nilable3.new(x: false).x.should eq false }
+    it { Nilable3.new(x: nil).x.should eq nil }
+    it { Nilable3.new(y: nil).x.should eq false }
+
+    it { Nilable3.new({:x => true}).x.should eq true }
+    it { Nilable3.new({:x => false}).x.should eq false }
+    it { Nilable3.new({:x => nil}).x.should eq nil }
+    it { Nilable3.new({:y => nil}).x.should eq false }
+
+    it { Nilable3.new({"x" => true}).x.should eq true }
+    it { Nilable3.new({"x" => false}).x.should eq false }
+    it { Nilable3.new({"x" => nil}).x.should eq nil }
+    it { Nilable3.new({"y" => 1}).x.should eq false }
+  end
+
+  context "Nilable4" do
+    it { Nilable4.new(true).x.should eq true }
+    it { Nilable4.new(false).x.should eq false }
+    it { Nilable4.new.x.should eq true }
+    it { Nilable4.new(nil).x.should eq nil }
+
+    it { Nilable4.new(x: true).x.should eq true }
+    it { Nilable4.new(x: false).x.should eq false }
+    it { Nilable4.new(x: nil).x.should eq nil }
+    it { Nilable4.new(y: nil).x.should eq true }
+
+    it { Nilable4.new({:x => true}).x.should eq true }
+    it { Nilable4.new({:x => false}).x.should eq false }
+    it { Nilable4.new({:x => nil}).x.should eq nil }
+    it { Nilable4.new({:y => nil}).x.should eq true }
+
+    it { Nilable4.new({"x" => true}).x.should eq true }
+    it { Nilable4.new({"x" => false}).x.should eq false }
+    it { Nilable4.new({"x" => nil}).x.should eq nil }
+    it { Nilable4.new({"y" => 1}).x.should eq true }
+  end
+
+  context "Nilable5" do
+    it { Nilable5.new(true).x.should eq true }
+    it { Nilable5.new(false).x.should eq false }
+    it { Nilable5.new.x.should eq nil }
+    it { Nilable5.new(nil).x.should eq nil }
+
+    it { Nilable5.new(x: true).x.should eq true }
+    it { Nilable5.new(x: false).x.should eq false }
+    it { Nilable5.new(x: nil).x.should eq nil }
+    it { Nilable5.new(y: nil).x.should eq nil }
+
+    it { Nilable5.new({:x => true}).x.should eq true }
+    it { Nilable5.new({:x => false}).x.should eq false }
+    it { Nilable5.new({:x => nil}).x.should eq nil }
+    it { Nilable5.new({:y => nil}).x.should eq nil }
+
+    it { Nilable5.new({"x" => true}).x.should eq true }
+    it { Nilable5.new({"x" => false}).x.should eq false }
+    it { Nilable5.new({"x" => nil}).x.should eq nil }
+    it { Nilable5.new({"y" => 1}).x.should eq nil }
   end
 end

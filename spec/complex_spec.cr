@@ -17,7 +17,7 @@ end
 describe AutoConstructor do
   context "complex" do
     it do
-      s2 = Complex.new(x: 10, z: 11)
+      s2 = Complex.new(x: 10, z: 11, jo: nil)
       s2.x.should eq 10
       s2.y.should eq "def"
       s2.z.should eq 11
@@ -44,7 +44,7 @@ describe AutoConstructor do
     end
 
     it do
-      s2 = Complex.new({:x => 10, :z => 11})
+      s2 = Complex.new({:x => 10, :z => 11, :jo => 8})
       s2.x.should eq 10
       s2.y.should eq "def"
       s2.z.should eq 11
@@ -53,7 +53,7 @@ describe AutoConstructor do
     end
 
     it do
-      s2 = Complex.new({"x" => 10, "z" => 11, "d" => "bla"})
+      s2 = Complex.new({"x" => 10, "z" => 11, "d" => "bla", "jo" => 8})
       s2.x.should eq 10
       s2.y.should eq "def"
       s2.z.should eq 11
