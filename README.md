@@ -37,7 +37,26 @@ p A.new({"a" => 1, "c" => 3, "e" => 1.0})        # => A(@a=1, @b="def", @c=3, @d
 ## Fields options
 
 ```
-  :default set default value
-  :getter (enabled by default, false to disable)
-  :setter (enabled by default, false to disable)
+  :default - set default value
+  :getter - (enabled by default, false to disable)
+  :setter - (enabled by default, false to disable)
+```
+
+## After initialize hook
+
+```crystal
+require "auto_constructor"
+
+class A
+  include AutoConstructor
+  field :x, Int32
+
+  property y : Int32
+
+  after_initialize do
+    @y = @x + 1
+  end
+end
+
+p A.new(1) # => #<A:0x10befc0 @x=1, @y=2>
 ```
