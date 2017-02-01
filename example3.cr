@@ -1,11 +1,12 @@
 require "./src/auto_constructor"
 
+# some base class
 class A
   include AutoConstructor
   field :x, Int32
 end
 
-# Some user code extend this class, with another field
+# some user code extend this class, with another field
 class A
   field :y, String
 end

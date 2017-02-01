@@ -66,12 +66,13 @@ p A.new(1) # => #<A:0x10befc0 @x=1, @y=2>
 ```crystal
 require "auto_constructor"
 
+# some base class
 class A
   include AutoConstructor
   field :x, Int32
 end
 
-# Some user code extend this class, with another field
+# some user code extend this class, with another field
 class A
   field :y, String
 end
