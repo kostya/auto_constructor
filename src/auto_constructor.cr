@@ -1,12 +1,3 @@
-struct NamedTuple
-  def blo?(key : Symbol | String)
-    {% for key in T %}
-      return true if {{key.symbolize}} == key
-    {% end %}
-    false
-  end
-end
-
 module AutoConstructor
   VERSION = "0.1"
 
