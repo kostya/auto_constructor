@@ -26,6 +26,9 @@ module AutoConstructor
             "property "
           end
         end
+        unless opts[:nilable]
+          opts[:nilable] = (type.stringify =~ /(\s\|\s|^|Union.+?)\(?(::)?Nil\)?/)
+        end
         AUTO_CONSTRUCTOR_FIELDS << opts
       %}
     end
