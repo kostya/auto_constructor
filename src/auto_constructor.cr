@@ -2,8 +2,10 @@ module AutoConstructor
   VERSION = "0.1"
 
   macro included
-    AUTO_CONSTRUCTOR_FIELDS = [] of Nil
-    AFTER_INITIALIZE = [] of Nil
+    {% if !@type.constant :AUTO_CONSTRUCTOR_FIELDS %}
+      AUTO_CONSTRUCTOR_FIELDS = [] of Nil
+      AFTER_INITIALIZE = [] of Nil
+    {% end %}
 
     # options:
     #   :name
