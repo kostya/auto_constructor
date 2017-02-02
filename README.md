@@ -79,3 +79,36 @@ end
 
 p A.new(1, "bla") # => #<A:0x1032d2f00 @x=1, @y="bla">
 ```
+
+## Example usage with auto_json and auto_msgpack
+
+```crystal
+require "auto_json"
+require "auto_msgpack"
+
+struct Person
+  include AutoJson
+  include AutoMsgpack
+
+  field :name, String
+  field :age, Int32
+  field :email, String?, json_key: "mail"
+  field :balance, Float64, default: 0.0, json: false
+  field :data, String?, msgpack: false
+end
+
+person = Person.new(name: "Vasya", age: 20, balance: 10.0, email: "bla@ru")
+p person # => Person(@age=20, @balance=10.0, @data=nil, @email="bla@ru", @name="Vasya")
+
+json = person.to_json
+puts json # => {"name":"Vasya","age":20,"mail":"bla@ru"}
+
+person2 = Person.from_json(json)
+p person2 # => Person(@age=20, @balance=0.0, @data=nil, @email="bla@ru", @name="Vasya")
+
+msgpack = person2.to_msgpack
+puts msgpack # => Bytes[132, 164, 110, ...]
+
+person3 = Person.from_msgpack(msgpack)
+p person3 # Person(@age=20, @balance=0.0, @data=nil, @email="bla@ru", @name="Vasya")
+```
