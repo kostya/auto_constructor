@@ -123,5 +123,14 @@ module AutoConstructor
         )
       end
     end
+
+    macro inherited
+      \{% if !@type.constant :AUTO_CONSTRUCTOR_FIELDS %}
+        include AutoConstructor
+        \{% for x in AUTO_CONSTRUCTOR_FIELDS %}
+          \\{% AUTO_CONSTRUCTOR_FIELDS << \{{x}} %}
+        \{% end %}
+      \{% end %}
+    end
   end
 end
