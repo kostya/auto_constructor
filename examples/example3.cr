@@ -1,4 +1,4 @@
-require "./src/auto_constructor"
+require "../src/auto_constructor"
 
 # some base class
 class A

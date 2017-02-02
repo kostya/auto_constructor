@@ -1,4 +1,4 @@
-require "./src/auto_constructor"
+require "../src/auto_constructor"
 
 class A
   include AutoConstructor
