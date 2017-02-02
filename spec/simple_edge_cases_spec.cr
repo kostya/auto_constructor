@@ -27,7 +27,7 @@ describe "AutoConstructor" do
 
   context "Nil1" do
     it { Nil1.new(nil).x.should eq nil }
-    it { Nil1.new(x: nil).x.should eq nil } 
+    it { Nil1.new(x: nil).x.should eq nil }
     it { Nil1.new({:x => nil}).x.should eq nil }
     it { Nil1.new({"x" => nil}).x.should eq nil }
   end
