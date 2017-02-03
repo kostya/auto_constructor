@@ -125,7 +125,7 @@ module AutoConstructor
     end
 
     macro inherited
-      \{% if !@type.constant :AUTO_CONSTRUCTOR_FIELDS %}
+      \{% if !@type.has_constant?(:AUTO_CONSTRUCTOR_FIELDS) %}
         include AutoConstructor
         \{% for x in AUTO_CONSTRUCTOR_FIELDS %}
           \\{% AUTO_CONSTRUCTOR_FIELDS << \{{x}} %}
@@ -134,7 +134,7 @@ module AutoConstructor
     end
 
     macro included
-      \{% if !@type.constant :AUTO_CONSTRUCTOR_FIELDS %}
+      \{% if !@type.has_constant?(:AUTO_CONSTRUCTOR_FIELDS) %}
         include AutoConstructor
         \{% for x in AUTO_CONSTRUCTOR_FIELDS %}
           \\{% AUTO_CONSTRUCTOR_FIELDS << \{{x}} %}
