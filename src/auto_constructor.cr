@@ -1,5 +1,5 @@
 module AutoConstructor
-  VERSION = "0.3"
+  VERSION = "0.4"
 
   macro included
     {% if !@type.constant :AUTO_CONSTRUCTOR_FIELDS %}
