@@ -1,3 +1,5 @@
+# THIS PROJECT DEPRECATED, user https://github.com/kostya/auto_initialize instead.
+
 # auto_constructor
 
 Auto construct initialize methods for classes and structs
