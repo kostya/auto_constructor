@@ -1,4 +1,4 @@
-# THIS PROJECT DEPRECATED, user https://github.com/kostya/auto_initialize instead.
+# THIS PROJECT DEPRECATED, use https://github.com/kostya/auto_initialize instead.
 
 # auto_constructor
 
